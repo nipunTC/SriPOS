@@ -47,9 +47,18 @@ class Auth extends BaseController
                 $session->setFlashdata('birthday_message', 'Happy Birthday, ' . $user['name'] . '!');
             }
             return redirect()->to('/dashboard');
+            
         }else {
             $session->setFlashdata('error', 'Invalid username or password.');
             return redirect()->to('/signup')->withInput();
         }
+    }
+
+    public function logout()
+    {
+        $session = session();
+        $session->destroy();
+        setcookie('remember_me', '', time() - 3600, "/", "", true, true); // delete cookie
+        return redirect()->to('/login');
     }
 }
