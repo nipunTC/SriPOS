@@ -27,7 +27,7 @@ class Auth extends BaseController
             }
         }
         // set page title
-        $data['title'] = 'Login - ShopWave';
+        $data['title'] = 'Login - SriPOS';
         return view('dashboard/signup',$data);
     }
     

@@ -65,6 +65,14 @@
             <span class="menu-title">Dashboard</span>
         </a>
         </li>
+         <li class="nav-item menu-items">
+            <a class="nav-link" href="index.html">
+                <span class="menu-icon">
+                <i class="mdi mdi-cart-plus"></i>
+                </span>
+                <span class="menu-title">Products</span>
+            </a>
+        </li>
         <li class="nav-item menu-items">
         <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
             <span class="menu-icon">
