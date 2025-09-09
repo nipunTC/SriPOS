@@ -11,3 +11,7 @@ $routes->get('/', 'Home::index');
 $routes->get('/signup', 'Auth::index');
 $routes->get('/login', 'Auth::index'); // invalid user return with display form with errors 
 $routes->post('/login', 'Auth::logins');
+$routes->get('/logout', 'Auth::logout');
+
+// Dashboard route
+$routes->get('/dashboard', 'Dashboard::index');

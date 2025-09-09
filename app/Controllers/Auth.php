@@ -21,9 +21,7 @@ class Auth extends BaseController
         $password        = $this->request->getPost('password');
         $remember        = $this->request->getPost('rememberMe');
 
-        $user = $userModel->where('username', $usernameOrEmail)
-                          ->orWhere('email', $usernameOrEmail) // allow email login too
-                          ->first();
+        $user = $userModel->where('username', $usernameOrEmail)->orWhere('email', $usernameOrEmail)->first();
     
         if ($user && password_verify($password, $user['password'])) {
             $session->set([
@@ -36,7 +34,7 @@ class Auth extends BaseController
 
             // update last login
             $userModel->update($user['id'], ['last_login' => date('Y-m-d H:i:s')]);
-
+            
             // remember me (improve later with secure token)
             if ($remember) {
                 setcookie('remember_me', $user['id'], time() + (86400 * 30), "/", "", true, true);
@@ -49,6 +47,9 @@ class Auth extends BaseController
                 $session->setFlashdata('birthday_message', 'Happy Birthday, ' . $user['name'] . '!');
             }
             return redirect()->to('/dashboard');
+        }else {
+            $session->setFlashdata('error', 'Invalid username or password.');
+            return redirect()->to('/signup')->withInput();
         }
     }
 }

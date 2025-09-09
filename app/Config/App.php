@@ -29,6 +29,10 @@ class App extends BaseConfig
      *
      * @var list<string>
      */
+
+    public string $sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler';
+    public string $sessionSavePath = WRITEPATH . 'session';
+
     public array $allowedHostnames = [];
 
     /**
@@ -199,4 +203,6 @@ class App extends BaseConfig
      * @see http://www.w3.org/TR/CSP/
      */
     public bool $CSPEnabled = false;
+
+
 }
