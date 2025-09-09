@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Controllers;
+use App\Models\UserModel;
+
+class Auth extends BaseController
+{
+    public function index(): string
+    {
+        // set page title
+        $data['title'] = 'Login - ShopWave';
+        return view('dashboard/signup',$data);
+    }
+    
+    public function logins()
+    {
+        $session   = session();
+        $userModel = new UserModel();
+
+        $usernameOrEmail = $this->request->getPost('username');
+        $password        = $this->request->getPost('password');
+        $remember        = $this->request->getPost('rememberMe');
+
+        $user = $userModel->where('username', $usernameOrEmail)
+                          ->orWhere('email', $usernameOrEmail) // allow email login too
+                          ->first();
+    
+        if ($user && password_verify($password, $user['password'])) {
+            $session->set([
+                'user_id'   => $user['id'],
+                'username'  => $user['username'],
+                'userRole'  => $user['role'],
+                'name'      => $user['name'],
+                'isLoggedIn'=> true
+            ]);
+
+            // update last login
+            $userModel->update($user['id'], ['last_login' => date('Y-m-d H:i:s')]);
+
+            // remember me (improve later with secure token)
+            if ($remember) {
+                setcookie('remember_me', $user['id'], time() + (86400 * 30), "/", "", true, true);
+            }
+
+            // check birthday
+            $today        = date('m-d');
+            $userBirthday = date('m-d', strtotime($user['birthday']));
+            if ($userBirthday == $today) {
+                $session->setFlashdata('birthday_message', 'Happy Birthday, ' . $user['name'] . '!');
+            }
+            return redirect()->to('/dashboard');
+        }
+    }
+}
