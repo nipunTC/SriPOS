@@ -23,6 +23,10 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="<?= base_url('/public/assets/css/style.css') ?>">
+    <!-- custom css files -->
+    <link rel="stylesheet" href="<?= base_url('/public/assets/css/custom.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('/public/assets/css/custom_responsive.css') ?>">
+
 </head>
 <body>
     

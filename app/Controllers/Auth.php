@@ -5,8 +5,27 @@ use App\Models\UserModel;
 
 class Auth extends BaseController
 {
-    public function index(): string
+    public function index()
     {
+        //if user is already logged in, redirect to dashboard
+        if (session()->get('isLoggedIn')) {
+            return redirect()->to('/dashboard');
+        }
+        //if user remember me cookie is set, log them in automatically
+        if (isset($_COOKIE['remember_me'])) {
+            $userModel = new UserModel();
+            $user = $userModel->find($_COOKIE['remember_me']);
+            if ($user) {
+                session()->set([
+                    'user_id'   => $user['id'],
+                    'username'  => $user['username'],
+                    'userRole'  => $user['role'],
+                    'name'      => $user['name'],
+                    'isLoggedIn'=> true
+                ]);
+                return redirect()->to('/dashboard');
+            }
+        }
         // set page title
         $data['title'] = 'Login - ShopWave';
         return view('dashboard/signup',$data);
