@@ -3,6 +3,8 @@
 namespace App\Controllers;
 use App\Models\ProductModel;
 use App\Models\CategoryModel;
+use App\Models\supplierModel;
+
 class Products extends BaseController
 {
     public function index()
@@ -17,9 +19,11 @@ class Products extends BaseController
     {
         $data['title'] = 'Add Products';
         $this->categoryModel = new CategoryModel();
+        $this->supplierModel = new SupplierModel();
         // load categories from database
         $data['categories'] = $this->categoryModel->findAll();
-        
+        //load supplier table has brands
+        $data['brands'] =$this->supplierModel->select('supplier_id, supplier_name')->findAll();
         return view('dashboard/products/add', $data);
     }
     public function store()
