@@ -11,6 +11,8 @@ class Dashboard extends BaseController
         if (!session()->get('isLoggedIn')) {
             return redirect()->to('/login');
         }else{
+            
+
             return view('dashboard/dashboard', $data);
         }
     }

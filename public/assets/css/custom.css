@@ -1,0 +1,38 @@
+.table thead th, .jsgrid .jsgrid-table thead th{
+    border-top: 1px solid #2c2e33;
+}
+.add-product-button{
+    margin-top: 15px;
+    width: 60px;
+    height: 60px;
+    border: 2px dashed #007bff;
+    border-radius: 5px;
+    font-size: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .3s all;
+}
+.add-product-button:hover{
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+}
+.table-row-no-data{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.btn i {
+    margin: 0;
+    padding: 0;
+}
+.input_requred{
+    color: red;
+}
+select.form-control, select.form-control:focus{
+    padding: .4375rem .75rem;
+    color: #b0b8c3;
+}

@@ -19,4 +19,13 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="<?= base_url('public/assets/js/dashboard.js') ?>"></script>
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- html5-qrcode -->
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<!-- Your JS -->
+
+<script src=" <?= base_url('public/assets/js/barcode-reader.js') ?>"></script>
     <!-- End custom js for this page -->

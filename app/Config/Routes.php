@@ -15,3 +15,10 @@ $routes->get('/logout', 'Auth::logout');
 
 // Dashboard route
 $routes->get('/dashboard', 'Dashboard::index');
+
+
+// Products route
+$routes->get('/products', 'Products::index');
+$routes->get('products/create', 'Products::create');
+$routes->get('/products/getByCode/(:any)', 'Products::getByCode/$1');
+
