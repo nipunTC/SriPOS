@@ -21,4 +21,4 @@ $routes->get('/dashboard', 'Dashboard::index');
 $routes->get('/products', 'Products::index');
 $routes->get('products/create', 'Products::create');
 $routes->get('/products/getByCode/(:any)', 'Products::getByCode/$1');
-
+$routes->post('categories/store', 'Categories::store');
