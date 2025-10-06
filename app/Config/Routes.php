@@ -18,7 +18,12 @@ $routes->get('/dashboard', 'Dashboard::index');
 
 
 // Products route
-$routes->get('/products', 'Products::index');
+$routes->get('/products/view', 'Products::index');
 $routes->get('products/create', 'Products::create');
 $routes->get('/products/getByCode/(:any)', 'Products::getByCode/$1');
 $routes->post('categories/store', 'Categories::store');
+$routes->post('products/store', 'Products::store');
+// category with filtering part
+$routes->post('categorySearch', 'Products::index');
+
+$routes->post('products/fetch', 'Products::fetch'); 

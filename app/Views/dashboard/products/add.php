@@ -8,18 +8,25 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
+           
             <div class="row">
+              
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Add Products</h4>
+                  <div class="card-body content-screen">
+                     <div class="screen-top-bar d-flex justify-content-between mb-4">
+                        <h4 class="page-title">Add Products</h4>
+                        <div class="d-flex align-items-center">
+                          <a href="<?= site_url('products') ?>" class="btn btn-sm btn-primary"><i class="bi bi-arrow-left-short"></i> Back to Products</a>
+                        </div>
+                      </div>
                     <p class="card-description">
-                      You can add/remove/edit products here.
+                      Add new products to the inventory system. Fields marked with <span class="input_requred">*</span> are required. 
                     </p>
                     <div class="system-table" >
-                      <form action="<?= base_url('products/store') ?>" method="post" enctype="multipart/form-data">
+                      <form id="add_products" action="<?= site_url('products/store') ?>" method="post" enctype="multipart/form-data">
                         <?= csrf_field() ?>
-                            <div class="">
+                            <div class="row">
                               <div class="col-sm-4">
                                 <div class="input-image-row">
                                   <div class="input-image">
@@ -47,9 +54,31 @@
                             </div>
                             <div class="row">
                               <div class="col-sm-4">
-                                <label class="form-label" for="product_code">Product Code <span class="input_requred">*</span></label>
+                                <label class="form-label" for="product_code">
+                                  Product Code / SKU 
+                                  <div class="more-info">
+                                      <i class="mdi mdi-information-outline"></i>
+                                      <div class="more-info-text">
+                                        Product code must be unique.
+                                      </div>
+                                  </div>
+                                </label>
                                 <div class="d-flex align-items-center">
                                   <input type="text" id="product_code" name="product_code" class="form-control w-60 mr-3" autofocus="on" required>
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <label class="form-label" for="bar_code">
+                                  Barcode <span class="input_requred">*</span>
+                                  <div class="more-info">
+                                      <i class="mdi mdi-information-outline"></i>
+                                      <div class="more-info-text">
+                                        You can scan barcode using a barcode scanner or you can menual enter barcode.
+                                      </div>
+                                  </div>
+                                </label>
+                                <div class="d-flex align-items-center">
+                                  <input type="text" id="bar_code" name="bar_code" class="form-control w-60 mr-3" autofocus="on" >
                                   <div class="barcode-reader btn btn-success short-button" hint="Barcode Scan" id="barcode-reader"> <i class="mdi mdi-barcode-scan"></i></div>
                                 </div>
                               </div>
@@ -57,8 +86,19 @@
                                   <label class="form-label" for="product_name">Product Name <span class="input_requred">*</span></label>
                                   <input type="text" id="product_name" name="product_name" class="form-control w-60 mr-3" required>
                               </div>
+                              
+                            </div>
+                            <div class="row mt-4">
                               <div class="col-sm-4">
-                                 <label class="form-label" for="product_name">Product Category <span class="input_requred">*</span></label>
+                                  <label class="form-label" for="product_name">
+                                    Product Category <span class="input_requred">*</span>
+                                    <div class="more-info">
+                                        <i class="mdi mdi-information-outline"></i>
+                                        <div class="more-info-text">
+                                          You can add a new category by clicking the + icon.
+                                        </div>
+                                    </div>
+                                  </label>
                                   <div class="d-flex align-items-center">
                                     <select class="form-control w-60 mr-3" name="category_id" id="category_id" required>
                                         <option value="">Select Category</option>
@@ -69,8 +109,6 @@
                                     <div class="add-category btn btn-success short-button" hint="Add New Category" data-bs-toggle="modal" data-bs-target="#addCategoryModelPopup"><i class="mdi mdi-plus"></i></div>
                                   </div>
                               </div>
-                            </div>
-                            <div class="row mt-3">
                               <div class="col-sm-4">
                                 <label class="form-label" for="brand_id">Brand <span class="input_requred">*</span></label>
                                 <select class="form-control w-60 mr-3" name="brand_id" id="brand_id">
@@ -85,13 +123,14 @@
                                   <input type="number" id="pur_price" name="pur_price" min="0" class="form-control w-60 mr-3 resize-y">
                                   <div class="currency-tag"></div>
                               </div>
+                            
+                            </div>
+                            <div class="row mt-4">
                               <div class="col-sm-4">
                                   <label class="form-label" for="selling_price">Selling Price<span class="input_requred">*</span></label>
                                   <input type="number" id="selling_price" name="selling_price" min="0" class="form-control w-60 mr-3 resize-y">
                                   <div class="currency-tag"></div>
                               </div>
-                            </div>
-                            <div class="row mt-3">
                               <div class="col-sm-4">
                                   <label class="form-label" for="stock_amount">Stock Amount<span class="input_requred">*</span></label>
                                   <input type="number" id="stock_amount" name="stock_amount" class="form-control w-60 mr-3 resize-y" min="0" >
@@ -100,14 +139,9 @@
                                   <label class="form-label" for="alert_quantity">Alert Quantity<span class="input_requred">*</span></label>
                                   <input type="number" id="alert_quantity" name="alert_quantity" class="form-control w-60 mr-3 resize-y" min="0" >
                               </div>  
-                              <div class="col-sm-4">
-                                  <label class="form-label" for="status">Status<span class="input_requred">*</span></label>
-                                  <div class="form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="status" checked>
-                                  </div>
-                              </div>  
+                               
                             </div>  
-                            <div class="row mt-3">
+                            <div class="row mt-4">
                                 <div class="col-sm-4">
                                   <label class="form-label" for="productDescription">Product Description</label>
                                   <textarea name="productDescription" id="productDescription" class="form-control resize-y" cols="30"></textarea>
@@ -116,14 +150,37 @@
                                     <div class="form-check">
                                       <label class="form-check-label">
                                           <input type="checkbox" class="form-check-input" id="enable_exp_date"> Enable Exp. Date <i class="input-helper"></i>
+                                          <span class="more-info">
+                                              <i class="mdi mdi-information-outline"></i>
+                                              <div class="more-info-text">
+                                                If you enable this option, you can set an expiration date for this product.
+                                              </div>
+                                          </span>
                                       </label>
                                     </div>
                                     <input type="date" id="exp_date" name="exp_date" class="form-control w-60 mr-3 resize-y" disabled>
                                 </div>
+                                <div class="col-sm-4">
+                                  <label class="form-label" for="status">Status<span class="input_requred">*</span>
+                                  <div class="more-info">
+                                      <i class="mdi mdi-information-outline"></i>
+                                      <div class="more-info-text">
+                                        You can active/deactive a product using this option. if a product is deactive, it will not appear in the POS sales screen.
+                                      </div>
+                                  </div>
+                                  </label>
+                                  <div class="form-switch">
+                                    <input class="form-check-input" name="status" type="checkbox" role="switch" id="status" checked>
+                                  </div>
+                              </div> 
                             </div>
-                            <div class="row">
-                              <div class="col-sm-12 mt-4">
-                                  <button type="submit" class="btn btn-success"> <i class="bi bi-floppy2-fill"></i>&nbsp Save Product </button>
+                            <div class="row mt-5">
+                              <div class="col-sm-12 mt-5">
+                                  <button type="submit" class="btn btn-success"> <i class="bi bi-floppy2-fill"></i>&nbsp Save </button>
+                                  &nbsp
+                                  <a href="<?= previous_url() ?>">
+                                    <button type="button" class="btn btn-light"> <i class="bi bi-x-circle"></i>&nbsp Cancel </button>
+                                  </a>
                               </div>
                             </div>
                         </form>

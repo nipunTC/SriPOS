@@ -12,66 +12,54 @@
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Products</h4>
-                    <p class="card-description">
-                      You can add/remove/edit products here.
-                    </p>
+                    <div class="top-row">
+                      <div class="left-side">
+                        <h4 class="card-title">Products</h4>
+                        <p class="card-description">
+                          You can add/remove/edit products here.
+                        </p>
+                      </div>
+                      <div class="right-side">
+                        <div class="filters-row">
+                          <div class="filter-container search">
+                              <label for="filterSearch"><i class="bi bi-search"></i> </label>
+                              <input type="text" id="filterSearch" class="form-control" placeholder="Search Product...">
+                          </div>
+                          <div class="filter-container cat-filter">
+                              <label for="filterCategory">Show</label>
+                              <select id="filterCategory"  class="form-control">
+                                  <option value="">All Categories</option>
+                                  <?php foreach($categories as $c): ?>
+                                      <option value="<?= $c->category_id ?>"><?= $c->category_name ?></option>
+                                  <?php endforeach; ?>
+                              </select>
+                          </div>
+                          <div class="filter-container rows-per-page-filter">
+                              <label for="rowsPerPage">Rows per Page</label>
+                              <select id="rowsPerPage"  class="form-control">
+                                  <option value="5">05</option>
+                                  <option value="10" selected>10</option>
+                                  <option value="20">20</option>
+                                  <option value="50">50</option>
+                                  <option value="100">100</option>
+                              </select>
+                          </div>
+                          <div class="btn-group export-btn">
+                            <button type="button" class="btn btn-success">Export</button>
+                            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span class="sr-only"></span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton3" style="">
+                              <h6 class="dropdown-header">Export As</h6>
+                              <a class="dropdown-item" href="#">PDF</a>
+                              <a class="dropdown-item" href="#">CVS</a>
+                            </div>
+                          </div>
+                      </div>
+                      </div>
+                    </div>
                     <div class="system-table table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th>ID</th>
-                            <th>Code</th>
-                            <th>Name</th>
-                            <th>Image</th>
-                            <th>Description</th>
-                            <th>Category ID</th>
-                            <th>Brand ID</th>
-                            <th>Unit ID</th>
-                            <th>Tax ID</th>
-                            <th>Status</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <?php if(!empty($products)) : ?>
-                            <?php foreach($products as $product) : ?>
-                                <tr>
-                                    <td><?= $product['product_id'] ?></td>
-                                    <td><?= $product['product_code'] ?></td>
-                                    <td><?= $product['name'] ?></td>
-                                    <td>
-                                        <?php if($product['product_img']): ?>
-                                            <img src="<?= base_url($product['product_img']) ?>" width="50">
-                                        <?php endif; ?>
-                                    </td>
-                                    <td><?= $product['description'] ?></td>
-                                    <td><?= $product['category_id'] ?></td>
-                                    <td><?= $product['brand_id'] ?></td>
-                                    <td><?= $product['unit_id'] ?></td>
-                                    <td><?= $product['tax_id'] ?></td>
-                                    <td><?= $product['status'] ?></td>
-                                    <td><?= $product['created_at'] ?></td>
-                                    <td><?= $product['updated_at'] ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                            <?php else : ?>
-                                <tr>
-                                    <td colspan="12">
-                                      <div class="table-row-no-data">
-                                        No products found.
-                                        <a href="<?= site_url('/products/create') ?>">
-                                        <div class="add-product-button">
-                                            <i class="mdi mdi-plus"></i>
-                                        </div>
-                                        </a>
-                                      </div>
-                                    </td>
-                                </tr>
-                            <?php endif; ?>
-                        </tbody>
-                      </table>
+                      <div id="productDataTable"></div>
                     </div>
                   </div>
                 </div>
@@ -84,4 +72,31 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+$(function(){
+  function loadTable(page=1){
+        $.post("<?= site_url('products/fetch') ?>", {
+            category: $("#filterCategory").val(),
+            search: $("#filterSearch").val(),
+            page: page,
+            limit: $("#rowsPerPage").val()
+        }, function(data){
+            $("#productDataTable").html(data); // Load HTML from partial view
+        });
+    }
+    loadTable();
+    
+     $("#filterCategory, #filterSearch, #rowsPerPage").on("change keyup", function(){
+        loadTable();
+    });
+
+    $(document).on("click", ".pagination a", function(e){
+        e.preventDefault();
+        let page = $(this).data("page");
+        loadTable(page);
+    });
+});
+</script>
 <?= view('dashboard/inc/footer') ?>
+<!-- products table load AJAX part  -->

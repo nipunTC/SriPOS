@@ -106,6 +106,7 @@ textarea.resize-y{
     transition: .3s all;
     overflow: hidden;
     position: relative;
+    margin-left: 0;
 }
 .image_preview_box svg{
     width: 40px;
@@ -152,4 +153,213 @@ textarea.resize-y{
 .image_preview_box.has-image:hover .remove-icon{
     opacity: 1;
     visibility: visible;
+}
+.more-info{
+    display: inline-block;
+    position: relative;
+    margin-left: 5px;
+    color: #6c757d;
+    cursor: pointer;
+}
+.more-info .more-info-text{
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #343a40;
+    color: #fff;
+    padding: 7px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    width: max-content;
+    max-width: 200px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s all;
+    z-index: 999;
+}
+.more-info .more-info-text::after{
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: #343a40 transparent transparent transparent;
+}
+.more-info:hover .more-info-text{
+    opacity: 1;
+    visibility: visible;
+}
+.content-screen{
+    padding: 50px !important;
+    min-height: 100%;
+}
+small{
+    color: #6c757d;
+}
+.dt-length label{
+    position: relative;
+    content: 'Page Per Page' !important;
+    padding-right: 20px;
+
+}
+.dt-search label{
+    display: none !important;
+}
+.status-success{
+    color: #28a745;
+}
+.status-danger{
+    color: #dc3545;
+}
+img.product_image{
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: cover;
+    border-radius: 5px !important;
+}
+select#dt-length-0{
+    padding: 5px 10px;
+    border: 1px solid #2b313f;
+    cursor: pointer;
+}
+select#dt-length-0 option {
+    background: #292e3b;
+}
+table.dataTable > tbody > tr {
+    background-color: transparent;
+    border-bottom: 1px solid #2b313f;
+}
+table.dataTable > thead > tr > th{
+    border-bottom: 1px solid #2b313f;
+}
+.dt-input{
+    background: #292e3b !important;
+    border: 1px solid #2b313f !important;
+    color: #b0b8c3 !important;
+    padding: 5px 10px;
+
+}
+.dt-input::placeholder{
+    color: #6c757d !important;
+    content: attr(placeholder);
+}
+.card-body .top-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.form-select-card-top{
+    background: #292e3b !important;
+    border: 1px solid #2b313f !important;
+    color: #b0b8c3 !important;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.form-group-top-row{
+    display: flex;
+    align-items: center;
+}
+.form-group-top-row label{
+    margin: 0;
+    margin-right: 15px;
+}
+.product-image{
+    width: 50px !important;
+    height: 50px !important;
+    object-fit: cover;
+    border-radius: 5px !important;
+}
+.filters-row{
+    display: flex;
+    align-items: center;
+}
+.filter-container.search{
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+.filter-container.search label{
+    margin-bottom: 0 !important;
+    margin-right: 5px;
+    display: flex;
+    align-items: center;
+}
+.filter-container.search label i{
+    margin-right: 5px;
+}
+.filter-container.cat-filter label{
+    margin-bottom: 0;
+    width: fit-content;
+}
+.filter-container.cat-filter{
+    display: flex;
+    align-items: center;
+}
+.filter-container.cat-filter label{
+    margin-right: 8px;
+}
+.filter-container.rows-per-page-filter{
+    display: flex;
+    align-items: center;
+}
+.filter-container.rows-per-page-filter label{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 0 !important;
+    margin-right: 8px;
+    margin-left: 15px;
+}
+.filter-container.rows-per-page-filter select{
+    width: 60px;
+}
+.export-btn{
+    margin-left: 15px;
+}
+tr{
+    border: 0 !important;
+}
+.pagination{
+    margin-top: 15px;
+}
+.pagination .page-item a.page-link{
+    border: 1px solid #28a745;
+    color: #28a745;
+}
+.pagination .page-item.active a.page-link{
+    background: #28a745 !important;
+    color: #ffffff;
+}
+.dropdown-item:hover, .dropdown-item:focus {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #13151b;
+}
+.edit-btn{
+    background: #007bff;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.edit-btn:hover{
+    background: #0056b3;
+    color: #fff;
+    text-decoration: none;
+}
+.delete-btn{
+    background: #dc3545;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.delete-btn:hover{
+    background: #a71d2a;
+    color: #fff;
+    text-decoration: none;
 }

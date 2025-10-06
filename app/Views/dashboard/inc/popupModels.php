@@ -13,6 +13,7 @@
                 <input type="text" id="category_name" name="category_name" class="form-control" required>
                 <small class="errors_display" style="color: red;">
                   <!-- json errors display -->
+                </small>
                   
               </div>
               <div class="col-sm-12 mt-3">
