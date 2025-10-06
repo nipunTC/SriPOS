@@ -129,8 +129,17 @@ $(document).ready(function() {
     // search input placeholder add
     $('.dt-search input').attr('placeholder', 'Search...');
 
+    // date and time displayer
+    function updateDateTime() {
+        const now = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+        const dateStr = now.toLocaleDateString(undefined, options);
+        const timeStr = now.toLocaleTimeString();
+        $('#date').text(`${dateStr}`);
+        $('#time').text(timeStr);
+    }
 
-
-   
-
+    // Update date and time every second
+    setInterval(updateDateTime, 1000);
+    updateDateTime(); // Initial call to display immediately
 });

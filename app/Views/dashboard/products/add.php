@@ -100,23 +100,27 @@
                                     </div>
                                   </label>
                                   <div class="d-flex align-items-center">
-                                    <select class="form-control w-60 mr-3" name="category_id" id="category_id" required>
-                                        <option value="">Select Category</option>
-                                        <?php foreach($categories as $category): ?>
-                                            <option value="<?= $category['category_id'] ?>"><?= $category['category_name'] ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <div class="add-category btn btn-success short-button" hint="Add New Category" data-bs-toggle="modal" data-bs-target="#addCategoryModelPopup"><i class="mdi mdi-plus"></i></div>
+                                    <div class="select">
+                                      <select class="w-60 mr-3" name="category_id" id="category_id" required>
+                                          <option value="">Select Category</option>
+                                          <?php foreach($categories as $category): ?>
+                                              <option value="<?= $category['category_id'] ?>"><?= $category['category_name'] ?></option>
+                                          <?php endforeach; ?>
+                                      </select>
+                                    </div>
+                                    <div class="add-category btn btn-success short-button ms-3" hint="Add New Category" data-bs-toggle="modal" data-bs-target="#addCategoryModelPopup"><i class="mdi mdi-plus"></i></div>
                                   </div>
                               </div>
                               <div class="col-sm-4">
                                 <label class="form-label" for="brand_id">Brand <span class="input_requred">*</span></label>
-                                <select class="form-control w-60 mr-3" name="brand_id" id="brand_id">
-                                    <option value="">Select Brand</option>
-                                        <?php foreach($brands as $brand): ?>
-                                            <option value="<?= $brand['supplier_id'] ?>"><?= $brand['supplier_name'] ?></option>
-                                        <?php endforeach; ?>
-                                </select>
+                                <div class="select">
+                                  <select class="w-60 mr-3" name="brand_id" id="brand_id">
+                                      <option value="">Select Brand</option>
+                                          <?php foreach($brands as $brand): ?>
+                                              <option value="<?= $brand['supplier_id'] ?>"><?= $brand['supplier_name'] ?></option>
+                                          <?php endforeach; ?>
+                                  </select>
+                                </div>
                               </div>
                               <div class="col-sm-4">
                                   <label class="form-label" for="pur_price">Purchased Price<span class="input_requred">*</span></label>

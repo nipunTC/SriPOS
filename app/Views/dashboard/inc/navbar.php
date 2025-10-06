@@ -16,9 +16,19 @@
                 </form>
               </li>
             </ul>
+            
             <ul class="navbar-nav navbar-nav-right">
-              <li class="nav-item dropdown d-none d-lg-block">
-                <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Project</a>
+              <!-- date and time displayer -->
+              <div class="date-time-container">
+                <div class="date">
+                  <div class="icon-part"><i class="bi bi-calendar-week"></i></div>
+                  <span id="date">Loading...</span>
+                </div>
+                <div class="time">
+                  <div class="icon-part"><i class="bi bi-clock"></i></div>
+                  <span id="time">Loading...</span>
+                </div>
+              </div>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
                   <h6 class="p-3 mb-0">Projects</h6>
                   <div class="dropdown-divider"></div>

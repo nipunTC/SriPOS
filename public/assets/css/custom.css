@@ -363,3 +363,71 @@ tr{
     color: #fff;
     text-decoration: none;
 }
+.date-time-container {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    margin-right: 10px;
+    cursor: normal;
+    user-select: none;
+}
+.date-time-container span{
+    margin: 0;
+}
+.date-time-container .date,.date-time-container .time{
+    display: flex;
+    align-items: center;
+}
+.date-time-container .date i, .date-time-container .time i{
+    margin-right: 5px;
+    font-size: 20px;
+}
+.date-time-container .date{
+    margin-right: 15px;
+}
+.select select{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: none;
+    border: 0;
+    color: #b0b8c3;
+    width: 100% !important;
+    padding: 8px 10px;
+    padding-right: 20px !important;
+    cursor: pointer !important;
+}
+.select>select:focus .select{
+    outline: 1px solid #28a745 !important;
+}
+.select select option{
+    background: #292e3b;
+    color: #b0b8c3;
+    padding: 8px 10px; 
+}
+.select{
+    width: -webkit-fill-available;
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #292e3b;
+    padding-right: 6px !important;
+}
+.select:focus{
+    outline: 1px solid #28a745 !important;  
+}
+.select::after{
+    content: "\F282";
+    font-family: "Bootstrap-icons";
+    font-weight: 900;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #b0b8c3;
+}
+.form-control{
+    background-color: #292e3b ;
+}

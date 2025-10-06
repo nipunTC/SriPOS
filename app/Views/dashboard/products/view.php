@@ -27,22 +27,26 @@
                           </div>
                           <div class="filter-container cat-filter">
                               <label for="filterCategory">Show</label>
-                              <select id="filterCategory"  class="form-control">
-                                  <option value="">All Categories</option>
-                                  <?php foreach($categories as $c): ?>
-                                      <option value="<?= $c->category_id ?>"><?= $c->category_name ?></option>
-                                  <?php endforeach; ?>
-                              </select>
+                              <div class="select">
+                                <select id="filterCategory" >
+                                    <option value="">All Categories</option>
+                                    <?php foreach($categories as $c): ?>
+                                        <option value="<?= $c->category_id ?>"><?= $c->category_name ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                              </div>
                           </div>
                           <div class="filter-container rows-per-page-filter">
-                              <label for="rowsPerPage">Rows per Page</label>
-                              <select id="rowsPerPage"  class="form-control">
+                              <label for="rowsPerPage">Rows Per Page</label>
+                              <div class="select w-50">
+                                <select id="rowsPerPage">
                                   <option value="5">05</option>
                                   <option value="10" selected>10</option>
                                   <option value="20">20</option>
                                   <option value="50">50</option>
                                   <option value="100">100</option>
-                              </select>
+                                </select>
+                              </div>
                           </div>
                           <div class="btn-group export-btn">
                             <button type="button" class="btn btn-success">Export</button>
