@@ -122,5 +122,11 @@ _modules/*
 # Visual Studio Code
 .vscode/
 
+#not upload any uploaded images
+/public/images/products/*
+/public/images/products/thumbs/*
+/uploads/product_images/*
+/uploads/*
+
 /results/
 /phpunit*.xml
