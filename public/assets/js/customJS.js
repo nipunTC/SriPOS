@@ -58,10 +58,54 @@ $('#enable_exp_date').change(function(){
 });
 
 
+function showFlashMessage(type, message) {
+    let progress = 0;
+    let interval = 80; // 80ms interval for 8 seconds total
+    setTimeout(() => {
+    const progressBar = document.querySelector('#flash-message .progress-bar');
+    let progress = 0;
+    const interval = 100; // milliseconds
+
+    if (progressBar) {
+      const timer = setInterval(() => {
+        // Reset progress if user is hovering
+        if ($('#flash-message').is(':hover')) {
+          progress = 0;
+        } else {
+          progress += (100 / (8000 / interval)); // 8 seconds total
+          progressBar.style.width = `${progress}%`;
+        }
+
+        // When progress completes
+        if (progress >= 100) {
+          clearInterval(timer);
+          $('#flash-message').fadeOut(400, function () {
+            $(this).remove();
+          });
+        }
+      }, interval);
+    }
+  }, 6000); // Start after 6 seconds
+
+  let bg = type === 'success' ? 'bg-success' : 'bg-danger';
+  $('#flash-message').remove();
+  $('body').append(`
+    <div id="flash-message" class="alert ${bg} spos-alert fade-in-right" style="z-index:1050;">
+      <!-- time with filling bar -->
+      <div class="progress-bar"></div>
+      <div class="icon">
+        <h5><i class="mdi ${type === 'success' ? 'mdi-check-circle' : 'mdi-alert-circle'}"></i> </h5>
+      </div>
+      <div class="message-body">
+        ${message}
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    </div>
+  `);
+}
 
 
-
-    // products add form submit
+// products add form submit
 $(document).ready(function() {
 
     // enable/disable exp date field
@@ -88,20 +132,22 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if(response.success) {
-                    alert(response.message);
-
                     // reset form
                     $("#add_products")[0].reset();
                     $("#exp_date").prop("disabled", true);
                     $(".image_preview_box img").remove(); // clear preview if you use it
                     $("#product_image").val(""); 
+                    $(".image_preview_box").css("background-image", "none").removeClass("has-image");
+                    $(".image_preview_box svg").removeClass("d-none").addClass("d-block");
+                    // show success message
+                    showFlashMessage('success', response.message);
                 } else {
-                    alert("Error: " + response.message);
+                    showFlashMessage('error', response.message);
                 }
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
-                alert("Something went wrong while saving the product.");
+                showFlashMessage('error', 'Something went wrong while saving the product.');
             }
         });
     });
@@ -143,3 +189,16 @@ $(document).ready(function() {
     setInterval(updateDateTime, 1000);
     updateDateTime(); // Initial call to display immediately
 });
+
+
+
+  
+function showDeleteModal(productId) {
+    $('#deleteProductModal').modal('show');
+    // product id set to hidden input field
+    var productID = productId;
+    $('#deleteProductForm #product_id').val(productID);
+  }
+
+
+  

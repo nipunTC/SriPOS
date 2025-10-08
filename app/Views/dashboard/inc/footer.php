@@ -21,12 +21,12 @@
     <script src="<?= base_url('public/assets/js/dashboard.js') ?>"></script>
     <!-- jQuery -->
 <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="<?= base_url('public/assets/js/customJS.js') ?>"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <!-- html5-qrcode -->
 <script src="https://unpkg.com/html5-qrcode"></script>
 
 <!-- Your JS -->
 
 <script src=" <?= base_url('public/assets/js/barcode-reader.js') ?>"></script>
-    <!-- End custom js for this page -->
+<!-- End custom js for this page -->
+<script src="<?= base_url('public/assets/js/customJS.js') ?>"></script>

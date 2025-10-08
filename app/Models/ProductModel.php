@@ -61,6 +61,7 @@ class ProductModel extends Model
     {
         return $this->select('products.*, categories.category_name as category_name')
                     ->join('categories', 'categories.category_id = products.category_id', 'left')
+                    ->orderBy('p.created_at', 'DESC')
                     ->findAll();
     }
 
@@ -100,9 +101,11 @@ class ProductModel extends Model
             $builder->groupStart()
                             ->like('p.product_name', $search)
                             ->orLike('p.bar_code', $search)
+                            ->orLike('c.category_name', $search)
                             ->groupEnd();
         }
 
-        return $builder->countAllResults();
+        return $builder->orderBy('p.created_at', 'DESC')->countAllResults();
+        
     }
 }

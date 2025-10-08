@@ -431,3 +431,88 @@ tr{
 .form-control{
     background-color: #292e3b ;
 }
+.modal-content{
+    background-color: #191c24 !important;
+    border-radius: 8px;
+}
+.modal-content .modal-body {
+    padding: 30px !important;
+}
+.form-control:disabled{
+    background-color: #292d35 !important;
+    cursor: not-allowed;
+    color: #6c757d !important;
+}
+.alert.spos-alert {
+    position: fixed;
+    bottom: 10px;
+    right: 30px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+}
+
+.fade-in-right{
+    animation:  fadeInRight 0.1s ease-in-out;
+}
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+.spos-alert{
+    overflow: hidden;
+}
+.spos-alert .progress-bar{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    animation: progressBarAnim 8s linear forwards;
+}
+.spos-alert.bg-success .progress-bar{
+    background: #00d25b;
+}
+.spos-alert.bg-danger .progress-bar{
+    background: #e00808;
+}
+.spos-alert h5{
+    margin: 0;
+    font-size: 18px;
+    margin-right: 5px;
+}
+.alert.spos-alert.bg-success{
+    background: #28a74582 !important;
+    border: 1px solid #28a745;
+}
+.alert.spos-alert.bg-danger{
+    background: #a71d2a82 !important;
+    border: 1px solid #a71d2a;
+}
+.alert.spos-alert{
+    position: fixed;
+    bottom: 10px;
+    right: 30px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    align-items: center;
+    padding: 10px 15px;
+    justify-content: space-between;
+}
+.alert.spos-alert  button.btn-close{
+    top: 0;
+    right: -8px;
+    z-index: 9999;
+    margin-left: 16px;
+    background: transparent;
+    color: #ffffff;
+    opacity: 1;
+}

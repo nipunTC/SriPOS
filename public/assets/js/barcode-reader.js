@@ -16,30 +16,4 @@ $(document).ready(function () {
             }
         }, 5000);
     });
-
-    // When scanner inputs code + Enter → capture
-    input.on("change", function () {
-        let code = $(this).val().trim();
-        if (code !== "") {
-            clearTimeout(scanTimeout); // cancel "not connected" check
-            status.text("✅ Barcode scanned successfully");
-
-            // 👉 AJAX request to backend
-            $.ajax({
-                url: "/products/getByCode/" + code,
-                type: "GET",
-                dataType: "json",
-                success: function (response) {
-                    if (response.success) {
-                        $("#product_name").val(response.product_name);
-                    } else {
-                        $("#product_name").val("Not found");
-                    }
-                },
-                error: function () {
-                    $("#product_name").val("Error fetching product");
-                }
-            });
-        }
-    });
 });

@@ -48,6 +48,13 @@
                                 </select>
                               </div>
                           </div>
+                          <div class="add-products">
+                            <a href="<?= site_url('/products/create') ?>" >
+                              <button class="btn btn-success ml-4">
+                                <i class="bi bi-plus-lg"></i> Add Products
+                              </button>
+                            </a>
+                          </div>
                           <div class="btn-group export-btn">
                             <button type="button" class="btn btn-success">Export</button>
                             <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -69,32 +76,35 @@
                 </div>
               </div>
             </div>
+            </div>
+             <?= view('dashboard/inc/messagesHanddler') ?>
+            <?= view('dashboard/inc/foot') ?>
           </div>
-          <?= view('dashboard/inc/foot') ?>
+          <?= view('dashboard/inc/popupModels') ?>
         </div>
         <!-- main-panel ends -->
       </div>
       <!-- page-body-wrapper ends -->
     </div>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-$(function(){
+ <script>
+   $(function(){
   function loadTable(page=1){
         $.post("<?= site_url('products/fetch') ?>", {
             category: $("#filterCategory").val(),
             search: $("#filterSearch").val(),
             page: page,
             limit: $("#rowsPerPage").val()
-        }, function(data){
+          }, function(data){
             $("#productDataTable").html(data); // Load HTML from partial view
-        });
+          });
     }
     loadTable();
     
      $("#filterCategory, #filterSearch, #rowsPerPage").on("change keyup", function(){
-        loadTable();
+       loadTable();
     });
-
+    
     $(document).on("click", ".pagination a", function(e){
         e.preventDefault();
         let page = $(this).data("page");
@@ -102,5 +112,5 @@ $(function(){
     });
 });
 </script>
-<?= view('dashboard/inc/footer') ?>
 <!-- products table load AJAX part  -->
+<?= view('dashboard/inc/footer') ?>

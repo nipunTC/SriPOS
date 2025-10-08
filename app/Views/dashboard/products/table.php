@@ -34,8 +34,11 @@
             <td><?= date('Y-m-d', strtotime($p['created_at'])) ?></td>
             <td><?= date('Y-m-d', strtotime($p['updated_at'])) ?></td>
             <td>
-                <a href="" class="edit-btn"><i class="bi bi-pencil-square"></i></a>
-                <a href="" class="delete-btn"><i class="bi bi-trash3-fill"></i></a>
+                <!-- update button -->
+                <button class="edit-btn editProductBtn" data-id="<?= $p['product_id'] ?>">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+                <button onclick="showDeleteModal(<?= $p['product_id'] ?>)" class="delete-btn"> <i class="bi bi-trash3-fill"></i></button>
             </td>
         </tr>
         <?php endforeach; ?>

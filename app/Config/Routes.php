@@ -26,4 +26,20 @@ $routes->post('products/store', 'Products::store');
 // category with filtering part
 $routes->post('categorySearch', 'Products::index');
 
-$routes->post('products/fetch', 'Products::fetch'); 
+$routes->post('products/fetch', 'Products::fetch'); // AJAX fetch products
+$routes->post('products/update', 'Products::update');
+$routes->get('products/delete/(:num)', 'Products::delete/$1');
+$routes->get('products/print', 'Products::printProducts');
+$routes->get('products/get/(:num)', 'Products::get/$1');
+$routes->get('categories/getlist', 'Products::getCategories');
+$routes->get('brands/getlist', 'Products::getBrands');
+// Json refresh table products
+$routes->get('products/refreshTable', 'Products::JSONRefreshTable');
+// delete product
+$routes->post('products/delete', 'Products::delete');
+
+
+// Settings route
+$routes->get('/settings', 'Settings::index');
+$routes->post('/settings/update', 'Settings::update');  
+

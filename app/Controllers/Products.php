@@ -14,14 +14,45 @@ class Products extends BaseController
     {
         $this->productModel = new ProductModel();
     }
-
     public function index()
     {
         $db = db_connect();
         $categories = $db->query("SELECT * FROM categories")->getResult();
-       
-        return view('dashboard/products/view', ['categories' => $categories]);
+        $products = $db->query("SELECT * FROM products")->getResult();
+        $data = [
+            'title' => 'View Products',
+            'categories' => $categories
+        ];
+
+        return view('dashboard/products/view', $data);
     }
+    // get single product by id
+    public function get($id)
+    {
+        $product = $this->productModel->find($id);
+        if (!$product) {
+            return $this->response->setJSON(['error' => 'Product not found']);
+        }
+
+        return $this->response->setJSON($product);
+    }
+    // load ajax with category list
+    public function getCategories()
+    {
+        $categoryModel = new CategoryModel();
+        $categories = $categoryModel->findAll();
+        return $this->response->setJSON($categories);
+
+    }
+    // load ajax with brand list
+    public function getBrands()
+    {
+        $supplierModel = new SupplierModel();
+        $brands = $supplierModel->select('supplier_id, supplier_name')->findAll();
+        return $this->response->setJSON($brands);
+
+    }
+
     public function create()
     {
         $data['title'] = 'Add Products';
@@ -35,6 +66,7 @@ class Products extends BaseController
     }
     public function fetch()
     {
+        
         $category = $this->request->getPost('category');
         $search   = $this->request->getPost('search');
         $page     = $this->request->getPost('page') ?? 1;
@@ -76,8 +108,6 @@ class Products extends BaseController
                     'message' => $validation->listErrors()
                 ]);
             }
-
-            // ✅ Handle Image Upload
             $imageName = null;
             $imageFile = $this->request->getFile('product_image');
 
@@ -150,5 +180,191 @@ class Products extends BaseController
         }
 
         return redirect()->back();
+    }
+    // product update function
+   public function update()
+{
+    if ($this->request->isAJAX()) {
+
+        $productId = $this->request->getPost('product_id');
+        // ✅ Load validation service
+        $validation = \Config\Services::validation();
+
+        // ✅ Define rules
+        $rules = [
+            'bar_code'       => 'required',
+            'product_name'   => 'required',
+            'category_id'    => 'required',
+            'brand_id'       => 'required',
+            'pur_price'      => 'required|decimal',
+            'selling_price'  => 'required|decimal',
+            'stock_amount'   => 'required|integer',
+            'alert_quantity' => 'required|integer',
+        ];
+
+
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'success' => false,
+                'filed_name' => $validation->getErrors(),
+                'message' => $validation->listErrors()
+            ]);
+        }
+
+        $existingImage = $this->request->getPost('existing_image');
+        $imageFile = $this->request->getFile('product_image');
+        $imageName = $existingImage;
+
+        // ✅ Handle new image upload
+        if ($imageFile && $imageFile->isValid() && !$imageFile->hasMoved()) {
+            $oldImagePath = FCPATH . 'uploads/product_images/' . $existingImage;
+            if (!empty($existingImage) && file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+
+            $uploadPath = FCPATH . 'uploads/product_images/';
+            if (!is_dir($uploadPath)) {
+                mkdir($uploadPath, 0777, true);
+            }
+
+            $imageName = time() . '_' . $imageFile->getRandomName();
+            $imageFile->move($uploadPath, $imageName);
+        }
+
+        // ✅ Prepare update data
+        $data = [
+            'bar_code'       => $this->request->getPost('bar_code'),
+            'product_name'   => $this->request->getPost('product_name'),
+            'category_id'    => $this->request->getPost('category_id'),
+            'brand_id'       => $this->request->getPost('brand_id'),
+            'pur_price'      => $this->request->getPost('pur_price'),
+            'selling_price'  => $this->request->getPost('selling_price'),
+            'stock_amount'   => $this->request->getPost('stock_amount'),
+            'alert_quantity' => $this->request->getPost('alert_quantity'),
+            'exp_date'       => $this->request->getPost('exp_date'),
+            'status'         => $this->request->getPost('status') ? 1 : 0,
+            'description'    => $this->request->getPost('description'),
+            'product_image'  => $imageName,
+            'updated_at'     => date('Y-m-d H:i:s'),
+        ];
+
+        $updated = $this->productModel->update($productId, $data);
+
+        if ($updated) {
+            session()->setFlashdata('success', $this->request->getPost('product_name').' updated successfully!');
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => session()->getFlashdata('success'),
+            ]);
+        } else {
+            session()->setFlashdata('error', 'Failed to update product!');
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => session()->getFlashdata('error'),
+            ]);
+        }
+
+    } else {
+        return redirect()->back();
+    }
+}
+
+
+    // products print function
+    public function printProducts()
+    {
+        $category = $this->request->getGet('category') ?? null;
+        $search   = $this->request->getGet('search') ?? null;
+
+        $products = $this->productModel->getFiltered($category, $search, null, null);
+
+        $pdf = new \FPDF('P', 'mm', 'A4');
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->Cell(0, 10, 'Product List', 0, 1, 'L');
+
+        // Table header
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(10, 10, 'ID', 1);
+        $pdf->Cell(50, 10, 'Name', 1);
+        $pdf->Cell(40, 10, 'Category', 1);
+        $pdf->Cell(30, 10, 'Price', 1);
+        $pdf->Cell(40, 10, 'Created', 1);
+        $pdf->Ln();
+
+        // Table data
+        $pdf->SetFont('Arial', '', 12);
+        foreach ($products as $p) {
+            $pdf->Cell(10, 10, $p->id, 1);
+            $pdf->Cell(50, 10, $p->name, 1);
+            $pdf->Cell(40, 10, $p->category, 1);
+            $pdf->Cell(30, 10, $p->price, 1);
+            $pdf->Cell(40, 10, $p->created_at, 1);
+            $pdf->Ln();
+        }
+
+        // Set headers to force download
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment; filename="product_list.pdf"');
+        $pdf->Output('D', 'product_list.pdf'); // 'D' forces download
+        exit; // Stop further execution
+    }
+    public function JSONRefreshTable()
+    {
+        $category = $this->request->getPost('category');
+        $search   = $this->request->getPost('search');
+        $page     = $this->request->getPost('page') ?? 1;
+        $limit    = $this->request->getPost('limit') ?? 5;
+        $offset   = ($page - 1) * $limit;
+
+        $rowNum = 1;
+        $products = $this->productModel->getFiltered($category, $search, $limit, $offset,$rowNum);
+        $total    = $this->productModel->countFiltered($category, $search);
+        return $this->response->setJSON([
+            'products' => $products,
+            'total'    => $total,
+            'page'     => $page,
+            'limit'    => $limit
+        ]);
+    }
+    public function delete()
+    {
+        $productID = $this->request->getPost('product_id');
+        $product = $this->productModel->find($productID);
+        if ($product) {
+            // Delete associated image file if exists
+            if (!empty($product['product_image'])) {
+                $imagePath = FCPATH . 'uploads/product_images/' . $product['product_image'];
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+
+            // Delete product from database
+            $this->productModel->delete($productID);
+
+            session()->setFlashdata('success', 'Product deleted successfully!');
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => session()->getFlashdata('success'),
+            ]);
+        } else {
+            session()->setFlashdata('error', 'Product not found!');
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => session()->getFlashdata('error'),
+            ]);
+        }
+    }
+    // test function
+    public function Test()
+    {
+        if ($this->request->isAJAX()) {
+            $productID = $this->request->getPost('product_id');
+            return $this->response->setJSON([
+                'success' => true,
+                'productID' => $productID,
+            ]);
+        }
     }
 }
