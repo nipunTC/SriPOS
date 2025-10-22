@@ -20,14 +20,15 @@
             <ul class="navbar-nav navbar-nav-right">
               <!-- date and time displayer -->
               <div class="date-time-container">
-                <div class="date">
-                  <div class="icon-part"><i class="bi bi-calendar-week"></i></div>
-                  <span id="date">Loading...</span>
-                </div>
-                <div class="time">
-                  <div class="icon-part"><i class="bi bi-clock"></i></div>
+                <div class="time mr-4">
+                  <div class="icon-part mr-2"><i class="bi bi-clock"></i></div>
                   <span id="time">Loading...</span>
                 </div>
+                <div class="date">
+                  <div class="icon-part mr-2"><i class="bi bi-calendar-week"></i></div>
+                  <span id="date">Loading...</span>
+                </div>
+                
               </div>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
                   <h6 class="p-3 mb-0">Projects</h6>

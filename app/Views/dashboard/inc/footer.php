@@ -26,7 +26,9 @@
 <script src="https://unpkg.com/html5-qrcode"></script>
 
 <!-- Your JS -->
-
 <script src=" <?= base_url('public/assets/js/barcode-reader.js') ?>"></script>
+<script>
+  const baseUrl = "<?= site_url() ?>"; // Expose base URL to JS
+</script>
 <!-- End custom js for this page -->
 <script src="<?= base_url('public/assets/js/customJS.js') ?>"></script>
