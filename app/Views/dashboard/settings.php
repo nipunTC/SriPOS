@@ -21,19 +21,19 @@
                     <div class="row">
                       <div class="tab-control-items">
                         <div class="tab-controller" datapathto="basicSettings">
-                            Basic Settings
+                          <i class="bi bi-gear"></i>  Basic Settings
                         </div>
                          <div class="tab-controller" datapathto="appearanceSettings">
-                            Appearance
+                          <i class="bi bi-palette2"></i> Appearance
                         </div>
                          <div class="tab-controller" datapathto="inventoryProductSettings">
-                            Inventory & Product
+                          <i class="bi bi-box2"></i> Inventory & Product
                         </div>
                          <div class="tab-controller" datapathto="userRoleSettings">
-                            User & Role Management
+                          <i class="bi bi-person-gear"></i> User & Role Management
                         </div>
                          <div class="tab-controller" datapathto="systemBackupSettings">
-                            System & Backup
+                          <i class="bi bi-cloud-download"></i> System & Backup
                         </div>
                       </div>
                       <div class="tab-control-contents">

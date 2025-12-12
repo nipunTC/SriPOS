@@ -42,3 +42,4 @@ $routes->post('products/delete', 'Products::delete');
 // Settings route
 $routes->get('/settings', 'Settings::index');
 $routes->post('/settings/update', 'Settings::update');
+$routes->post('settings/removeLogo', 'Settings::removeLogo');

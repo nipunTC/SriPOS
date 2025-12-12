@@ -71,5 +71,45 @@ class Settings extends Controller
             ]);
         }
     }
+    public function removeLogo()
+    {
+        $settingsModel = new SettingsModel();
+
+        try {
+            $existing = $settingsModel->first();
+
+            if (!$existing) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'No settings record found.'
+                ]);
+            }
+
+            // 🔹 Remove logo file from uploads folder if it exists
+            if (!empty($existing['shop_logo'])) {
+                $filePath = FCPATH . 'uploads/' . $existing['shop_logo'];
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
+
+            // 🔹 Update DB record to remove logo reference
+            $settingsModel->update($existing['id'], [
+                'shop_logo' => null,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Logo removed successfully.'
+            ]);
+        } catch (\Throwable $th) {
+            return $this->response->setStatusCode(500)->setJSON([
+                'success' => false,
+                'message' => 'Error: ' . $th->getMessage()
+            ]);
+        }
+    }
+
 
 }
